@@ -27,4 +27,25 @@
                         @wheel ||= Wheel.new(rim, tire)
                    end
                 ```
-            
+    
+**Remove Argument-Order Dependencies**
+    - Purpose: passing argument depends on the order. It makes worse.
+    - Solution:
+        - Use Hashes for Initialization Arguments.
+        - Explicitly define defaults: 
+            - using || operator.
+                ```
+                    def initialize(args)
+                        @chainring = args[:chainring] || 40
+                        @bool = args[:bool] || true
+                    end
+                ```    
+            - using fetch: only if the key is not in args hash.
+                ```
+                    def initialize(args)
+                        @chainring = args.fetch(:chainring], 40)
+                    end
+                ```  
+        - Isolate multiparameter initialization: a factory contains the methods creating instances of other classes.
+        
+**Managing Dependency Direction**
