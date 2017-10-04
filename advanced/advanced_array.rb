@@ -21,7 +21,8 @@ def zen(*args)
 end
 p zen(42, 43, 44, 45, 46)
 
-zen = *(1..42)
+zen = *(0..42)
+p "zen by *(0..42) : #{zen}"
 str = *"Zen"
 
 zen = *(1..42)
