@@ -17,7 +17,6 @@ def new_pos current_i, gap
 end
 
 def result
-  console_input
   return @arr if @n == 1
   brr = Array.new(@n)
   gap = @k > @n ? @k%@n : @k
@@ -25,7 +24,14 @@ def result
   brr
 end
 
-result.each {|e| print "#{e} " }
+require 'benchmark'
+
+console_input
+@res
+Benchmark.bm do |x|
+  x.report("Left rotation") { @res = result }
+end
+@res.each {|e| print "#{e} " }
 
 # approaches:
 # - if k > n ?

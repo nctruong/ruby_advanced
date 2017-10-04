@@ -1,3 +1,4 @@
+# Origin: http://ruby-doc.org/stdlib-2.0.0/libdoc/thread/rdoc/Queue.html
 class MyQueue
   attr_accessor :queue
 
