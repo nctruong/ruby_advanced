@@ -1,0 +1,25 @@
+%section#comments.comments-area
+    - if post.the_comments.count > 0
+        %h2.comments-title
+            = post.the_comments.count
+            = ct('comments', default: 'Comments')
+            "
+            %span>= post.the_title
+            "
+        %section.comment-list
+            = render partial: "partials/comments_list", locals: { comments: post.the_comments, children: "" }
+    #respond.comment-respond
+        - if signin?
+            %h3#reply-title.comment-reply-title= "Member's Comment"
+            = form_for post, url:{action: :save_comment, post_id: post.id}, html: {method: "post", class: "comment-form"} do |f|
+                %input{:name => "post_comment[post_id]", :type => "hidden", :value => "#{post.id}"}/
+                %input{:name => "slug", :type => "hidden", :value => "#{post.slug}"}/
+                .mb-20
+                    %textarea#textarea_comments.form-control.counted{:name => "post_comment[content]", :placeholder => "#{ct('comment', default: 'Enter youe comment here')}"}
+                .mb-20
+                    %button.btn.btn-info.pull-right{:type => "submit"}= ct('comment', default: 'Comment')
+            %br
+        - else
+            .panel-login-comment
+                = ct('comment_msg', default: 'You need to be logged in')
+                %a.link-login-comment{:href => cama_admin_path}= ct('login', default: 'Login')

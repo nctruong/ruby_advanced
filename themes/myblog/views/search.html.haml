@@ -1,0 +1,22 @@
+.photo-header
+    %h1.p-name.post-title.l-container
+        = "Guru on Rails"
+    .l-container.subtitle
+        = "A day a problem solved, a year we become the Pro"
+    %small.license.thetop
+        /Will Nguyen
+.col-md-12.col-lg-12
+    %header.page-header
+        %h1.page-title
+            = ct('search_msg', default: 'Text searched: ')
+            = params[:q]
+
+
+    .col-md-12
+        - @posts.each_with_index do |post, index|
+            = raw "<div class='clearfix'></div>" if index%3 == 0 && index > 0
+            = render partial: 'partials/post_list_item', locals: {post: post.decorate}
+    = content_tag("div", raw(ct('no_contents_found', default: 'No contents found')), class: "alert alert-warning") if @posts.empty?
+.col-md-12.col-lg-12
+    .text-center
+        = will_paginate  @posts, renderer: BootstrapPagination::Rails

@@ -1,0 +1,24 @@
+.photo-header
+    %h1.p-name.post-title.l-container
+        = "Guru on Rails"
+    .l-container.subtitle.thetop
+        = "A day a problem solved, a year we become the Pro"
+    %small.license
+        /Will Nguyen
+.col-md-12.col-lg-12{:class => "category_#{@category.slug}"}
+    = render partial: 'partials/breadcrumb', locals: {breadcrumb: @category.the_breadcrumb }
+    %h1
+        = @category.the_title
+        = @category.the_edit_link
+    .content
+        = raw @category.the_content
+    - if @children.present?
+        .well
+            = render partial: "partials/categories_list", locals: {categories: @children }
+
+    - _tpl = lookup_context.template_exists?("post_types/#{@post_type.the_slug}/post_list_item", nil, true) ? "post_types/#{@post_type.the_slug}/post_list_item" : 'partials/post_list_item'
+    - @posts.each_with_index do |post, index|
+        = render partial: _tpl, locals: {post: post.decorate, index: index}
+    = content_tag("div", raw(ct('no_contents_found', default: 'No contents found')), class: "alert alert-warning") if @posts.empty?
+    .text-center
+        = will_paginate @posts, renderer: BootstrapPagination::Rails if @posts.present?

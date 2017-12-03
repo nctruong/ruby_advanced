@@ -13,11 +13,24 @@ class MyStack
   def pop
     stack.pop
   end
+
+  def empty?
+    stack.empty?
+  end
 end
 
 stack = MyStack.new
-stack.push 1
-stack.push 2
-stack.push 3
-stack.pop
+for i in (1..3) do
+  stack.push i
+end
 p stack.stack
+
+stack.pop
+stack.pop
+stack.pop
+if stack.empty?
+  p "empty stack"
+end
+
+# [1, 2, 3]
+# "empty stack"

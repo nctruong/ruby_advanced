@@ -1,46 +1,54 @@
 require 'logger'
-class Order
-  def initialize(order_items, customer)
-    @logger = Logger.new("log.txt")
-    @order_items = order_items
-    @customer = customer
-    @state = :new
-    @logger.info "New order from #{@customer}"
+class Logger
+  @@instance = Logger.new(STDOUT)
+  def self.instance
+    @@instance
   end
-
-  def procure(vendor)
-    if @state == :new
-      @vendor = vendor
-      @state = :procured
-      @logger.info "Order procured from #{@vendor}"
+  module Severity
+    # Redefine Constant by using self.class:: syntax
+    self.class::DEBUG = 0
+    self.class::INFO = 1
+    self.class::WARN = 2
+    self.class::ERROR = 3
+    self.class::FATAL = 4
+    WILL = 5
+    self.class::UNKNOWN = 6
+  end
+  def level=(severity)
+    if severity.is_a?(Integer)
+      @level = severity
     else
-      @logger.error "You can procure only new orders"
+      _severity = severity.to_s.downcase
+      case _severity
+        when 'debug'.freeze
+          @level = DEBUG
+        when 'info'.freeze
+          @level = INFO
+        when 'warn'.freeze
+          @level = WARN
+        when 'error'.freeze
+          @level = ERROR
+        when 'fatal'.freeze
+          @level = FATAL
+        when 'will'.freeze
+          @level = WILL
+        when 'unknown'.freeze
+          @level = UNKNOWN
+        else
+          raise ArgumentError, "invalid log level: #{severity}"
+      end
     end
   end
-
-  def pack
-    if @state == :procured
-      @state = :packed
-      @logger.info "Order packed"
-    else
-      @logger.error "You can't pack before procuring"
-    end
-  end
-
-  def ship(address)
-    if @state == :packed
-      @state = :shipped
-      @shipping_address = address
-      @logger.info "Order shipped to #{@shipping_address}"
-    else
-      @logger.error "You can't ship before packing"
-    end
+  def will_log(progname = nil, &block)
+    add(WILL, nil, progname, &block)
   end
 end
 
-order = Order.new(["mouse", "keyboard"], "Asta")
-order.procure("Awesome Supplier")
-order.pack
-order.ship("The Restaurant, End of the Universe")
+Logger.instance.level = Logger::DEBUG
+Logger.instance.will_log "Will"
+Logger.instance.info "Info"
+Logger.instance.error "Error"
+Logger.instance.debug("ABC"){ "Rejected: ABX" }
+
 
 

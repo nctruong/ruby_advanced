@@ -1,0 +1,30 @@
+- @articles = current_site.the_posts("post").latest.paginate(:page => params[:page], :per_page => current_site.front_per_page).eager_load(:metas)
+.photo-header.thetop
+  %h1.p-name.post-title.l-container
+    = "Guru on Rails"
+  .l-container.subtitle
+    = "A day a problem solved, a year we become the Pro"
+  %small.license
+    /Will Nguyen
+.col-md-12.col-lg-12
+  .row
+    .col-md-8
+      - @articles.order(created_at: :desc).each_with_index do |post, index|
+        = raw "<div class='clearfix'></div>" if index%3 == 0 && index > 0
+        = render partial: 'partials/post_list_item', locals: {post: post.decorate}
+
+        = content_tag("div", raw(ct('no_contents_found', default: 'No contents found.')), class: "alert alert-warning") if @articles.empty?
+    .col-md-4.single-sidebar
+      = render partial: 'partials/sidebar', locals: {post: @post}
+
+  .row
+    .text-center
+      = will_paginate  @articles, renderer: BootstrapPagination::Rails
+
+
+
+
+
+:coffeescript
+  $('.pagination_panel').find('.col-md-6').attr('class','')
+  $('.total-items').remove()

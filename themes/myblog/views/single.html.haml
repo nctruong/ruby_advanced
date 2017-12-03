@@ -1,0 +1,40 @@
+- owner_decorate = @post.owner.decorate
+
+.photo-header
+  %h1.p-name.post-title.l-container
+    = @post.the_title
+  .l-container.subtitle
+    = @post.the_edit_link
+  %small.license.thetop
+    .fa.fa-calendar{"data-original-title" => "", :title => ""}
+    = @post.try(:created_at).strftime("%a %d %b %Y")
+    -#= ". Written By:"
+    -#%label
+    -#  %img{src: owner_decorate.the_avatar, :style => "max-width: 24px; border-radius: 50%"}
+    -#  %a{:href => owner_decorate.the_url}= CamaleonCms::User.find_by(id: @post.user_id).try(:username).capitalize
+
+.col-md-12.col-lg-12
+  = render partial: 'partials/breadcrumb', locals: {breadcrumb: @post.the_breadcrumb}
+  - if @post_type.the_slug == "page"
+    .widget-sidebar.margin-bottom-5
+      .content-widget-sidebar
+        .panel-body
+          .item-content
+            = raw @post.the_content
+            / custom fields
+          - if @post.render_fields.present?
+            %hr/
+            %h4= ct("extra_attributes", default: 'Extra Attributes')
+            = raw @post.render_fields
+  - else
+    .col-md-8.post-view
+      .panel
+        .panel-body
+          .item-content.margin-top-20
+            = raw @post.the_content
+
+      = render partial: 'partials/comments', locals: {post: @post} if @post.can_commented?
+      .row.center-block.facebook-comments
+        = render partial: 'partials/facebook_comments'
+    .col-md-4.single-sidebar
+      = render partial: 'partials/sidebar', locals: {post: @post}

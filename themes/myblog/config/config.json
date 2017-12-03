@@ -1,0 +1,14 @@
+{
+  "name" : "Myblog",
+  "description" : "",
+  "thumb" : "images/image.png",
+  "helpers": [
+    "Themes::Myblog::MainHelper"
+  ],
+  "hooks": {
+    "on_active": ["myblog_on_install_theme"],
+    "on_inactive": ["myblog_on_uninstall_theme"],
+    "on_theme_settings": ["myblog_settings"]
+    //here all your hooks
+  }
+}

@@ -21,3 +21,4 @@ queue.enqueue 2
 queue.enqueue 3
 queue.dequeue
 p queue.queue
+# [2, 3]

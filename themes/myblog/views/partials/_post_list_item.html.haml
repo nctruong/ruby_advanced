@@ -1,0 +1,29 @@
+- user = CamaleonCms::User.find_by(id: post.user_id)
+//{style:"background-color:white !important"}
+.widget-sidebar.margin-bottom-5
+  .title-widget-sidebar-2
+
+    %a{:href => "#{post.the_url}", style:"font-size:20px; color: #365899"}
+      %b= post.the_title
+    .pull-right{style:"font-size:12px; color: grey"}
+      %i.small
+        .fa.fa-calendar{"data-original-title" => "", :title => ""}
+        = post.try(:created_at).strftime("%a %d %b %Y")
+      -#%i.small
+      -#  = ". Written By:"
+      -#  %label
+      -#    %a{:href => "#"}= user.try(:username).capitalize
+      -#    %img{src: user.decorate.the_avatar, :style => "max-width: 24px; border-radius: 50%"}
+
+  .content-widget-sidebar
+    /%img.post-img-thumb.img-responsive{:src => "#{post.the_thumb_url CamaleonCms::Site.first.options[:logo]}"}/
+    %p
+      - categories = post.categories.decorate
+      - if categories.present? && !defined?(skip_categories)
+        - categories.each do |cat|
+          %span.badge
+            %a{:href => "#{cat.the_url}"}= cat.the_title
+
+    .mce-i-blockquote.blockquote-reverse
+      %span{style:"font-size:16px"}= raw post.the_excerpt
+      = post.the_edit_link

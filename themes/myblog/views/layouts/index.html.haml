@@ -1,0 +1,147 @@
+!!!
+%html
+  %head
+    / META SECTION
+    %title= current_site.the_title
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
+    %meta{:content => "Guru on Rails", :name => "description"}/
+    %meta{:content => "Ruby Community, Ruby Books, Ruby Jobs, Ruby Articles, Ruby on Rails Community, Ruby Remote Jobs, Ruby Rails, Ruby Rails Heroku Html5 css3 javascript git heroku, ruby gems", :name => "keywords"}/
+    / END META SECTION
+    / Global site tag (gtag.js) - Google Analytics
+    %script{:async => "", :src => "https://www.googletagmanager.com/gtag/js?id=UA-78356578-2"}
+    :javascript
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-78356578-2');
+
+    = stylesheet_link_tag    'application'
+    /, 'media' => 'all'
+    /, data: { 'turbolinks-track' => true}
+    = javascript_include_tag 'application'
+    /, data: {'turbolinks-track' => true}
+    = csrf_meta_tags
+    = raw the_head
+
+  %body.template-people
+    #fb-root
+    :coffeescript
+      (
+        (d, s, id) ->
+          console.log "facebook"
+          js = undefined
+          fjs = d.getElementsByTagName(s)[0]
+          if d.getElementById(id)
+            return
+          js = d.createElement(s)
+          js.id = id
+          js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10'
+          fjs.parentNode.insertBefore js, fjs
+          return
+      ) document, 'script', 'facebook-jssdk'
+    .navbar-custom.navbar-fixed-under-top.col-md-12.col-lg-12
+      .navbar-header
+        %button.navbar-toggle{"data-target" => "#myNavbar", "data-toggle" => "collapse", :type => "button"}
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        %a.navbar-brand{"data-method" => "get", :href => "/"} Guru on Rails
+      .container
+        #myNavbar.collapse.navbar-collapse
+          = raw get_nav_menu('main_menu', 'nav navbar-nav ')
+          %ul.nav.navbar-nav
+
+          %ul.nav.navbar-nav.navbar-right
+            - if signin?
+              %li.dropdown
+                %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                  %img{:alt => "", :src => "#{cama_current_user.decorate.the_avatar}", :style => "max-width: 24px; border-radius: 50%"}
+                  = cama_current_user.username
+                %ul.dropdown-menu.menu-dropdown
+                  %li
+                    %a{:href => new_cama_admin_post_type_post_path(post_type_id:2)} New Post
+                  %li
+                    %a{:href => cama_admin_dashboard_path} Dashboard
+                  %li
+                    %a{:href => cama_admin_profile_path} Profile
+                  %li
+                    %a{:href => cama_admin_logout_path} Logout
+            - else
+              %li.dropdown
+                %a#login-user.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"} Login / Register
+                %ul.dropdown-menu.menu-dropdown
+                  %li
+                    %a{:href => cama_admin_login_path} Login
+                  %li
+                    %a{:href => cama_admin_register_path} Register
+
+          = render 'partials/search_form'
+          = raw current_site.draw_languages("language list-inline pull-right", true)
+    / ./header
+    .content{style:"background-color: white"}
+      = yield
+    / Return to Top
+    %a#return-to-top{:href => "javascript:"}
+      %i.fa.fa-arrow-up
+
+    %footer.margin-top-20
+      .site-footer
+        .stripe.stripe--social
+          .footer-logo{:alt => "2016", :height => "111", :src => "", :width => "164"}/
+          %span
+            Made by Human
+          %p.copyright
+            Copyright @ guruonrails
+
+.mini-submenu
+  %i.fa.fa-search
+#dictionary
+  #lbdict_plugin_frame.margin-bottom-5
+:coffeescript
+  $('.mini-submenu').click ->
+    console.log '.mini-submenu'
+    if $('#dictionary').css('z-index') == '-1000'
+      $('#dictionary').css('z-index', 1000)
+    else
+      $('#dictionary').css('z-index', -1000)
+    return
+
+  h = {
+    s: 'http://dict.laban.vn',
+    w: 300,
+    h: 500,
+    hl: 1,
+    th: 3,
+  }
+
+  loadScript = (t, e) ->
+    console.log "load script"
+    n = document.createElement('script')
+    n.type = 'text/javascript'
+    if n.readyState then
+
+    else
+      (n.onload = (->
+        e()
+        return
+      ))
+
+      n.src = t
+      q = document.getElementById('lbdict_plugin_frame')
+      q.parentNode.insertBefore(n, q)
+      return
+
+  setTimeout (->
+    loadScript 'http://stc.laban.vn/dictionary/js/plugin/lbdictplugin.frame.min.js', ->
+      lbDictPluginFrame.init h
+      return
+    return
+  ), 1000
+
+
+
+
+

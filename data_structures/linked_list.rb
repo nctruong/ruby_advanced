@@ -1,80 +1,140 @@
 class Node
-  attr_accessor :node, :next
+  attr_accessor :key, :next_, :prev
 
-  def initialize(node)
-    @node = node
+  def initialize(key)
+    @key = key
   end
 end
 
 class LinkedList
-  attr_accessor :n1
-  def initialize(n1)
-    @n1 = n1
+  def insert node, node_before = nil, node_after = nil
+    raise "not implemented yet"
   end
 
-  def last_node
-    class << n1
-      def find_last node
-        node.next.nil? ? node : self.find_last(node.next)
-      end
-    end
-    n1.find_last n1
+  def delete key
+    raise "not implemented yet"
   end
 
-  def add_node node
-    last_node.next = node
+  def search
+    raise "not implemented yet"
   end
 
-  def find_node_by_name name
-    found_node n1, name
-  end
-
-  def insert_node new_node, behind_node
-    swap_nodes new_node, behind_node
-  end
-
-  def list_nodes
-    node = n1
-    nodes = [node.node]
-    while !node.next.nil?
-      node = node.next
-      nodes << node.node
-    end
-    nodes
-  end
-
-  private
-  def found_node n, name
-    n.node == name ? true : (n.next.nil? ? false : found_node(n.next, name))
-  end
-  def swap_nodes n1, n2
-    next_node = n2.next
-    n2.next = n1
-    n1.next = next_node
+  def empty?
+    raise "not implemented yet"
   end
 end
 
-# TEST
-n1 = Node.new('n1')
-n2 = Node.new('n2')
-n3 = Node.new('n3')
-n4 = Node.new('n4')
-n5 = Node.new('n5')
+class SinglyLinkedList < LinkedList
+  attr_accessor :nodes
+  attr_accessor :head, :tail
 
-n1.next = n2
-n2.next = n3
-n3.next = n4
-n4.next = n5
+  def initialize
+    @nodes = Array.new
+  end
 
-llist = LinkedList.new n1
+  def add node
+    push node
+  end
 
-p llist.find_node_by_name "n6"
-p "last node: " << llist.last_node.node
-n6 = Node.new('n6')
-n7 = Node.new('n7')
-llist.add_node n6
-p "last node: " << llist.last_node.node
-p llist.list_nodes
+  def insert node_before, node, node_after
+    if node_after.nil?
+      # add to after tail - default, no matter node_before is nil or not.
+      push node
+    elsif node_before.nil?
+      # add to before head
+      unshift node
+    else
+      # insert to middle list
+      node_before.next = node
+      node.next_ = node_after
+    end
+  end
 
-llist.insert_node n7, n3
-p llist.list_nodes
+  def delete key
+    node = search key
+    unless node.nil?
+      prev = prev node
+      unless prev.nil?
+        prev.next_ = node.next_
+      else
+        @head = node.next_
+      end
+    end
+  end
+
+  # return nil if key not found
+  def search key, lambda = {}
+    node = head
+    while node.next_ != nil && node.key != key
+      node = node.next_
+    end
+    node
+  end
+
+  def show
+    list = String.new
+    node = head
+    while !node.nil?
+      list += node.key.to_s
+      node = node.next_
+    end
+    p list
+  end
+
+  def empty?
+    @head.nil? ? true : false
+  end
+
+  private
+    def unshift node
+      node.next_ = @head
+      @head = node
+      @nodes << node
+    end
+
+    def push node
+      @head = node if head.nil?
+      tail.next_ = node unless tail.nil?
+      @tail = node
+      node.next_ = nil
+      @nodes << node
+    end
+
+    # cases: head, middle, tail
+    def prev node_or_key
+      key = String.new
+      case node_or_key
+        when Node
+          key = node_or_key.key
+        when String
+          key = node_or_key
+        else
+          p "only accept String or Node type"
+      end
+
+      prev = node = @head
+      while node.next_ != nil && node.key != key
+        prev = node
+        node = node.next_
+      end
+      prev == node ? nil : prev
+    end
+
+end
+
+list = SinglyLinkedList.new
+n1 = Node.new 1
+n2 = Node.new 2
+list.add n1
+list.insert  nil, n2, n1
+list.show
+list.delete 2
+list.show
+# if list.empty?
+#   p "empty list"
+# end
+# list.delete 2
+# list.show
+
+# "12"
+# "1"

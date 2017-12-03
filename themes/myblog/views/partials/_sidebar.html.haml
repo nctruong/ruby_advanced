@@ -1,0 +1,66 @@
+- unless post.nil?
+  - if post.has_thumb? && !defined?(skip_thumb)
+    .panel.panel-default
+      .panel-body
+        = raw post.the_link_thumb({}, {class: "img-responsive img-rounded col-md-12 col-lg-12"})
+
+- if !defined?(skip_last_articles)
+  .widget-sidebar.margin-bottom-5
+    %h2.title-widget-sidebar RECENT POST
+    .content-widget-sidebar
+      %ul
+        - current_site.the_posts("post").latest.limit(7).decorate.each do |p|
+          %li.recent-post
+            .post-img
+              %img.img-responsive{:src => "#{p.the_thumb_url CamaleonCms::Site.first.options[:logo]}"}/
+              %a{:href => "#{p.the_url}"}
+                = p.the_title
+              %p
+                %small
+                  %i.fa.fa-calendar{"data-original-title" => "", :title => ""}
+                  = p.try(:created_at).strftime("%a %d %b %Y")
+            .mce-i-blockquote
+              = p.the_edit_link
+          %hr/
+
+- unless post.nil?
+  - if !defined?(skip_similar_art)
+    .widget-sidebar.margin-bottom-5
+      %h2.title-widget-sidebar RELATED ARTICLES
+      .content-widget-sidebar
+        %ul.list-unstyled
+          - post.the_related_posts.latest.limit(7).group(:id).having("count(*) > 1").decorate.each do |p|
+            %li.media
+              .img.d-flex.mr-3{ src:"...", alt:"Generic placeholder image" }
+              .media-body
+                .mt-0.mb-1
+                  %a{:href => "#{p.the_url}"}= p.the_title
+                  /%i.fa.fa-minus-square-o.margin-right-5.margin-top-5.pull-left
+
+- categories = CamaleonCms::Category.all.decorate
+- if categories.present? && !defined?(skip_categories)
+  .widget-sidebar.margin-bottom-5
+    %h2.title-widget-sidebar CATEGORY
+    .content-widget-sidebar
+      - categories.each do |cat|
+        .mt-0.mb-1.badge
+          %a{:href => "#{cat.the_url}"}= cat.the_title
+
+- unless post.nil?
+  - if !defined?(skip_tasg)
+    - tags = post.the_tags.decorate
+    - if tags.present?
+      .panel.panel-default
+        .panel-heading= ct("post_tag_list", default: 'Tags')
+        .panel-body
+          - tags.each do |post_tag|
+            %a.btn.btn-default.btn-xs{:href => "#{post_tag.the_url}"}= post_tag.the_title
+            %i.fa.fa-minus-square-o.margin-right-5.margin-top-5.pull-left
+  / custom fields
+  - if post.render_fields.present? && !defined?(skip_fields)
+    .panel.panel-default
+      .panel-heading= ct("extra_attributes", default: 'Extra Attributes')
+      .panel-body
+        = raw post.render_fields
+
+
