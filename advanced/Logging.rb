@@ -1,6 +1,6 @@
 require 'logger'
 class Logger
-  @@instance = Logger.new(STDOUT)
+  @@instance = Logger.new("mylog.txt")
   def self.instance
     @@instance
   end

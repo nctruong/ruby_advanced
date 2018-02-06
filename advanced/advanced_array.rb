@@ -45,3 +45,6 @@ p [4, 8, 15, 16, 23, 42].zip([42, 23, 16, 15, 8])
 
 p [4, 8, 15, 16, 23, 42].slice(2)
 p [4, 8, 15, 16, 23, 42].slice(2..5)
+
+sentence = "short longest"
+sentence.split(" ").max_by(&:length)
