@@ -1,0 +1,18 @@
+--input
+Alice paid  $100.00 for phone bill.
+Bob paid    $200.00 for petrol.
+David paid  $300.00 for groceries.
+Claire paid $400.00 for snacks.
+
+--process
+average: (100+200+300+400)/4 = 250
+
+Alice: 100-250= -150
+Bob: 200-250= -50
+Claire: 400-250= 150
+David: 300-250= 50
+
+
+--result
+Alice pays $150.0 to Claire.
+Bob pays $50.0 to David.
