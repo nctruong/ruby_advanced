@@ -1,4 +1,0 @@
-Alice paid  $100.10 for phone bill.
-Bob paid    $200.20 for petrol.
-David paid  $300.30 for groceries.
-Claire paid $400.40 for snacks.

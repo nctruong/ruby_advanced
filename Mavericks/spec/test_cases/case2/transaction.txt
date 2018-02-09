@@ -1,3 +1,0 @@
-Alice paid  $100.00 for phone bill.
-Bob paid    $200.00 for petrol.
-David paid  $300.00 for groceries.
