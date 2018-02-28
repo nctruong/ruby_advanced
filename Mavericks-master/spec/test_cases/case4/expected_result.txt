@@ -1,0 +1,30 @@
+--input
+Claire paid $100.10 for phone bill.
+Bob paid $55.90 for petrol.
+David paid $170.80 for groceries.
+David paid $33.40 for breakfast.
+Bob paid $85.60 for lunch.
+Claire paid $103.45 for dinner.
+Claire paid $30.80 for snacks.
+Bob paid $70 for house-cleaning.
+David paid $63.50 for utilities.
+
+--process
+Claire: 100.10 + 103.45 + 30.80 = 234.35
+Bob: 55.90 + 85.60 + 70 = 211.5
+David: 170.80 + 33.40 + + 63.50 = 267.7
+Alice: 0
+total : 713.55
+average: 713.55/4 = 178.39
+
+Alice: 0 - 178.39 = -178.39
+Bob: 211.5-178.39= 33.11
+Claire: 234.35-178.39= 55.96
+David: 267.7-178.39= 89.31
+
+
+--result
+Alice pays $89.31 to David.
+Alice pays $55.96 to Claire.
+Alice pays $33.11 to Bob.
+
