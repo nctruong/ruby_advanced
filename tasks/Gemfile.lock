@@ -1,0 +1,16 @@
+GEM
+  specs:
+    ffi (1.9.18)
+    libreconv (0.9.1)
+      spoon
+    spoon (0.0.6)
+      ffi
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  libreconv
+
+BUNDLED WITH
+   1.16.1

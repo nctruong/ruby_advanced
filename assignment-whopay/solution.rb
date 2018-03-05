@@ -1,19 +1,16 @@
-require './transaction.rb'
+# Main program
+require "#{Dir.pwd}/config/configuration.rb"
 
 if ARGV.size < 2
-  p "Lacking of file path"
-  p "Example: ruby solution.rb 'people.txt' 'transaction.txt'"
+  Logger.log_instance.debug Lib::Message::Issue::LACK_FILE_PATH
+  Logger.log_instance.debug Lib::Message::Issue::INSTRUCTION
+elsif !File.exist?(ARGV.first)
+  message = "#{ARGV.first} #{Lib::Message::Issue::FILE_NOT_EXISTED}"
+  Logger.log_instance.debug message
+elsif !File.exist?(ARGV[1])
+  message = "#{ARGV[1]} #{Lib::Message::Issue::FILE_NOT_EXISTED}"
+  Logger.log_instance.debug message
 else
-  case false
-    when File.exist?(ARGV.first)
-      p "#{ARGV.first} file not existed"
-    when File.exist?(ARGV[1])
-      p "#{ARGV[1]} file not existed"
-    else
-      solution = Transaction.new(ARGV.first,ARGV[1])
-      print solution.results
-  end
+  solution = Lib::Transaction.new({people_path: ARGV.first, transaction_path: ARGV[1]})
+  print solution.results
 end
-
-
-

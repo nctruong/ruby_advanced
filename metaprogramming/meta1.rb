@@ -1,3 +1,4 @@
+# demo [instance, module, class]_eval
 class Thing
 end
 
@@ -30,19 +31,13 @@ Thing.class_eval do
   end
 end
 
-# 1
+# module method
 t = Thing.new
-puts t.hello()
+t.hello()
 
-# 2
+# class method & instance method
 Thing.self_class_eval_custom
 t.instance_class_eval_custom
-
-# 3
-t.instance_class_eval_custom
-
-# 4
-Thing.instance_class_eval_custom
 
 # 5.
 # - primitive data type which the language can then make sense of.

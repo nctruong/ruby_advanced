@@ -1,5 +1,4 @@
-# When doing any metaprogramming, tracking changes to the runtime is a problem
-# that you will encounter sooner or later.
+# Override following methods to track methods added. They'll be invoked automatically in runtime
 class Dojo
   @@methods_removed = []
   # Invoked as a callback whenever an instance method is added to the receiver.

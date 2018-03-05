@@ -1,3 +1,29 @@
+<h1> Update </h1>
+<h2> Improving code based on Coding Standards </h2>
+I added:<br/>
+- Logger for logging.<br/>
+- File config: config/configuration.rb <br/>
+- Lib folder contains all classes needed. <br/>
+- Split amount class from transaction class. <br/>
+
+<h2> Rubocop for testing coding standard <h2>
+<pre>
+➜  Mavericks rubocop lib
+Inspecting 5 files
+5 files inspected, no offenses detected
+</pre>
+
+<pre>
+➜  Mavericks rubocop config 
+Inspecting 1 file
+1 file inspected, no offenses detected
+</pre>
+<pre>
+➜  Mavericks rubocop solution.rb 
+Inspecting 1 file
+1 file inspected, no offenses detected
+</pre>
+
 <h1> Solution</h1>
 
 **Step#1.** Calculating the total paid amount of each person.<br>

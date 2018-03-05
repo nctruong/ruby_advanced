@@ -1,0 +1,5 @@
+# Logfile created on 2018-02-26 11:26:15 +0700 by logger.rb/56438
+D, [2018-02-26T11:34:15.225172 #85947] DEBUG -- : Lacking of file path
+D, [2018-02-26T11:34:22.822538 #85971] DEBUG -- : Lacking of file path
+D, [2018-02-26T11:34:22.822668 #85971] DEBUG -- : Example: ruby solution.rb 'people.txt' 'transaction.txt'
+D, [2018-02-26T11:35:05.946089 #86471] DEBUG -- : dkfjdk file not existed
