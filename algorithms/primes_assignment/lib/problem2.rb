@@ -3,19 +3,18 @@
 class Problem2 < MyPrimes
   def initialize(max)
     super
+    @lookup = -> { LookPrimes }
   end
 
   def prime_under_max_has_most_cons_primes
-    most_consecutive_primes_under_max.inject(:+)
+    euler_n.to_i
+    index, new_euler_n = first_index_primes_have_sum_under_max(euler_n)
+    find_longest_primes(index, new_euler_n).inject(:+)
   end
 
   private
 
-  def most_consecutive_primes_under_max
-    euler_n.to_i
-    index, new_euler_n = first_index_primes_have_sum_under_max(euler_n)
-    find_longest_primes(index, new_euler_n)
-  end
+  attr_reader :lookup
 
   # Calculating n as the limitation index of primes array.
   def euler_n
@@ -66,43 +65,12 @@ class Problem2 < MyPrimes
     index
   end
 
-  # Finally, assume that the consecutive primes expected is an array
-  # with index in range (begin..end).
-  # Thus, 'p_begin' will be in range (0..index - 1)
-  # 'p_end' will be in range (index - 1..new_euler_n)
-  # Doing loops to get sum of the most consecutive primes expected
   def find_longest_primes(index, new_euler_n)
-    longest_primes = [0]
-    p_begin = 0
-    p_end = index - 1
-    subprimes = primes.take(new_euler_n)
-    loop do
-      break if p_end > new_euler_n
-      loop do
-        break if p_end < p_begin || p_begin > index
-          cons = subprimes[p_begin..p_end]
-          sum_is_prime = prime?(cons.inject(:+))
-          longest_primes = compare_primes(longest_primes, cons) if sum_is_prime
-          p_begin += 1
-      end
-      p_end += 1
-      p_begin = 0
-    end
-    longest_primes
-  end
-
-  def prime?(num)
-    primes.include?(num)
-  end
-
-  def compare_primes(current, new_prime)
-    longest_primes = current
-    if new_prime.size > current.size
-      longest_primes = new_prime
-    # if same sizes, calculating sum of current and new array of primes
-    elsif new_prime.size == current.size
-      longest_primes = new_prime if new_prime.inject(:+) > current.inject(:+)
-    end
-    longest_primes
+    args = {
+      primes: primes,
+      euler_n: new_euler_n,
+      index: index
+    }
+    lookup.call.new(args).look_up_longest_primes
   end
 end

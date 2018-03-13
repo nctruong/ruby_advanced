@@ -10,6 +10,7 @@ class MyPrimes
 
   private
 
+  # main method solved 1st problem
   def primes2_below(max)
     @primes = (0..max).to_a
     @primes[0] = @primes[1] = nil
@@ -34,5 +35,9 @@ class MyPrimes
       @primes[multiple] = nil
       break if multiple > max
     end
+  end
+
+  def prime?(num)
+    primes.include?(num)
   end
 end

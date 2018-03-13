@@ -38,10 +38,10 @@ Scenario:
 - Finally, assuming that the consecutive primes expected is an array with index in range (begin..end). Thus, prime `begin` index will be in range (0..index - 1) and prime `end` index will be in range (index - 1..new_euler_n). Doing loops to get sum of the most consecutive primes expected.
 
 ## Installation
-`bundle`: to install ruby gems needs in Gemfile.
+`bundle`: to install ruby gems needed in Gemfile.
 
 ## Run program and test
 
-`bundle exec rake`: to show both results of two problem.
+`bundle exec rake`: to show both results of two problems.
 
 `rspec spec`: to run integration test.    
